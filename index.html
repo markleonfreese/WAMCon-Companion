@@ -53,9 +53,11 @@
     <section class="tools-card">
       <div>
         <h2>Your notes stay on this device</h2>
-        <p>Check-ins, favourites and notes are stored locally. Export a backup whenever you want.</p>
+        <p>Check-ins, favourites and notes are stored locally. Export a backup whenever you want, or import an earlier WAMCon Companion export.</p>
       </div>
       <div class="tool-buttons">
+        <button id="importBtn" class="secondary">Import v1 notes</button>
+        <input id="importFile" type="file" accept=".txt,text/plain" hidden>
         <button id="exportBtn" class="secondary">Export notes</button>
         <button id="installBtn" class="secondary" hidden>Install app</button>
       </div>
@@ -94,5 +96,6 @@
   </template>
 
   <script src="./app.js"></script>
+  <script src="./import.js"></script>
 </body>
 </html>
