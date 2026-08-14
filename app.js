@@ -16,11 +16,19 @@ function perthParts(date=new Date()){
   const o = Object.fromEntries(p.filter(x=>x.type!=="literal").map(x=>[x.type,x.value]));
   return {date:`${o.year}-${o.month}-${o.day}`,time:`${o.hour}:${o.minute}:${o.second}`,minutes:+o.hour*60 + +o.minute};
 }
-function mins(t){ const [h,m]=t.split(":").map(Number); return h*60+m; }
-function fmt(t){ const [h,m]=t.split(":").map(Number); const d=new Date(2026,0,1,h,m); return d.toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit"}).replace(" ",""); }
-function dayText(d){ return d==="2026-08-14" ? "Friday 14 August" : "Saturday 15 August"; }
+function mins(t){
+  if(!t) return Number.POSITIVE_INFINITY;
+  const [h,m]=t.split(":").map(Number); return h*60+m;
+}
+function fmt(t){
+  if(!t) return "Time not listed";
+  const [h,m]=t.split(":").map(Number);
+  const d=new Date(2026,0,1,h,m);
+  return d.toLocaleTimeString("en-AU",{hour:"numeric",minute:"2-digit"}).replace(" ","");
+}
 
 function relation(s, now=perthParts()){
+  if(!s.start || !s.end) return s.date < now.date ? "past" : "untimed";
   if(s.date < now.date) return "past";
   if(s.date > now.date) return "future";
   if(now.minutes >= mins(s.start) && now.minutes < mins(s.end)) return "live";
@@ -45,7 +53,7 @@ function effectiveDay(){ return selectedDay==="today" ? actualDay() : selectedDa
 function updateNowCard(){
   if(!sessions.length) return;
   const now=perthParts();
-  const today=sessions.filter(s=>s.date===now.date);
+  const today=sessions.filter(s=>s.date===now.date && s.start && s.end);
   const live=today.filter(s=>relation(s,now)==="live");
   const next=today.filter(s=>relation(s,now)==="future").sort((a,b)=>mins(a.start)-mins(b.start))[0];
 
@@ -61,7 +69,7 @@ function updateNowCard(){
     $("#nowSub").textContent="Switch to Saturday to plan tomorrow.";
   } else if(now.date==="2026-08-15"){
     $("#nowHeadline").textContent="WAMCon daytime sessions are finished";
-    $("#nowSub").textContent="Your check-ins and notes remain available below.";
+    $("#nowSub").textContent="The Saturday showcase and your saved notes remain available below.";
   } else {
     $("#nowHeadline").textContent="WAMCon 2026 companion";
     $("#nowSub").textContent="Friday 14 + Saturday 15 August · Walyalup/Fremantle.";
@@ -72,29 +80,56 @@ function shouldShow(s){
   const d=effectiveDay();
   if(s.date!==d) return false;
   const r=relation(s);
-  if(filter==="upcoming") return r==="live" || r==="future";
+  if(filter==="upcoming") return r==="live" || r==="future" || r==="untimed";
   if(filter==="priority") return s.priority;
   if(filter==="checked") return !!state.checkins[s.id];
   if(filter==="planned") return !!state.planned[s.id];
   return true;
 }
 
+function escapeHtml(value=""){
+  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function buildProgramDetails(s){
+  if(!s.description && !s.practical && !(s.topics||[]).length && !s.roleLine) return "";
+  const topicHtml=(s.topics||[]).map(t=>`<span class="topic">${escapeHtml(t)}</span>`).join("");
+  return `<details class="program-details">
+    <summary>Program details</summary>
+    <div class="program-body">
+      ${s.roleLine?`<div class="role-line">${escapeHtml(s.roleLine)}</div>`:""}
+      ${s.description?`<p>${escapeHtml(s.description)}</p>`:""}
+      ${s.practical?`<div class="practical"><strong>Good to know:</strong> ${escapeHtml(s.practical)}</div>`:""}
+      ${topicHtml?`<div class="topics">${topicHtml}</div>`:""}
+    </div>
+  </details>`;
+}
+
 function render(){
   const root=$("#schedule");
   root.innerHTML="";
-  const list=sessions.filter(shouldShow).sort((a,b)=>mins(a.start)-mins(b.start) || a.venue.localeCompare(b.venue));
+  const list=sessions.filter(shouldShow).sort((a,b)=>{
+    const aUntimed=!a.start, bUntimed=!b.start;
+    if(aUntimed!==bUntimed) return aUntimed ? 1 : -1;
+    return mins(a.start)-mins(b.start) || a.venue.localeCompare(b.venue);
+  });
   if(!list.length){ root.innerHTML='<div class="empty">No sessions match this view.</div>'; return; }
+
   for(const s of list){
     const node=$("#sessionTemplate").content.firstElementChild.cloneNode(true);
     node.dataset.id=s.id;
     node.id=`session-${s.id}`;
-    node.querySelector(".start").textContent=fmt(s.start);
-    node.querySelector(".end").textContent=`to ${fmt(s.end)}`;
+    node.querySelector(".start").textContent=s.start ? fmt(s.start) : "SAT";
+    node.querySelector(".end").textContent=s.end ? `to ${fmt(s.end)}` : "time not listed";
     node.querySelector(".title").textContent=s.title;
     node.querySelector(".meta").textContent=`${s.type} · ${s.venue}`;
     node.querySelector(".people").textContent=s.people || "";
     const badges=node.querySelector(".badges");
-    badges.innerHTML=`<span class="badge">${s.type}</span>${s.priority?'<span class="badge rec">Recommended</span>':""}`;
+    badges.innerHTML=`<span class="badge">${escapeHtml(s.type)}</span>${s.priority?'<span class="badge rec">Recommended</span>':""}${!s.start?'<span class="badge">Untimed</span>':""}`;
+
+    const actions=node.querySelector(".actions");
+    actions.insertAdjacentHTML("beforebegin",buildProgramDetails(s));
+
     const plan=node.querySelector(".plan-btn");
     const check=node.querySelector(".check-btn");
     const noteWrap=node.querySelector(".note-wrap");
@@ -159,7 +194,10 @@ function jumpToNow(){
   render();
   setTimeout(()=>{
     const live=$(".session-card.live");
-    const firstFuture=[...$$(".session-card")].find(c=>relation(sessions.find(s=>s.id===c.dataset.id))==="future");
+    const firstFuture=[...$$(".session-card")].find(c=>{
+      const s=sessions.find(x=>x.id===c.dataset.id);
+      return s && relation(s)==="future";
+    });
     (live||firstFuture||$("#schedule")).scrollIntoView({behavior:"smooth",block:"start"});
   },60);
 }
@@ -167,11 +205,15 @@ function jumpToNow(){
 function exportNotes(){
   const attended=sessions.filter(s=>state.checkins[s.id] || state.notes[s.id] || state.planned[s.id]).map(s=>({
     date:s.date,start:s.start,end:s.end,title:s.title,venue:s.venue,type:s.type,
-    planned:!!state.planned[s.id],checkedInAt:state.checkins[s.id]||null,notes:state.notes[s.id]||""
+    planned:!!state.planned[s.id],checkedInAt:state.checkins[s.id]||null,notes:state.notes[s.id]||"",
+    program:s.description||"",practical:s.practical||"",people:s.people||""
   }));
   const lines=["WAMCon 2026 Companion Export",`Exported: ${new Date().toISOString()}`,""];
   attended.forEach(x=>{
-    lines.push(`${x.date} ${x.start}-${x.end} | ${x.title} | ${x.venue}`);
+    lines.push(`${x.date} ${x.start||"untimed"}-${x.end||""} | ${x.title} | ${x.venue}`);
+    if(x.people) lines.push(`People: ${x.people}`);
+    if(x.program) lines.push(`Program: ${x.program}`);
+    if(x.practical) lines.push(`Good to know: ${x.practical}`);
     lines.push(`Planned: ${x.planned?"Yes":"No"} | Checked in: ${x.checkedInAt||"No"}`);
     if(x.notes) lines.push(`Notes:\n${x.notes}`);
     lines.push("");
@@ -188,7 +230,7 @@ $("#exportBtn").addEventListener("click",exportNotes);
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;$("#installBtn").hidden=false;});
 $("#installBtn").addEventListener("click",async()=>{if(!deferredPrompt)return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; $("#installBtn").hidden=true;});
 
-fetch("./schedule.json").then(r=>r.json()).then(data=>{
+fetch("./schedule.json",{cache:"no-store"}).then(r=>r.json()).then(data=>{
   sessions=data; render(); updateClock(); setInterval(updateClock,1000);
 }).catch(()=>{
   $("#schedule").innerHTML='<div class="empty">Could not load the local schedule file.</div>';
