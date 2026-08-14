@@ -8,7 +8,11 @@
     "type": "Morning Network",
     "venue": "Bathers Beach",
     "people": "Nici Ward (Move For Good)",
-    "priority": false
+    "priority": false,
+    "roleLine": "Fitness class led by Nici Ward (Move For Good)",
+    "description": "A relaxed outdoor movement and mobility session to start WAMCon, with social connection, simple exercises and an optional cold dip. It is intended to leave attendees energised before the conference day.",
+    "practical": "Designed for all fitness levels. Bring a water bottle; the cold plunge is optional. The program also suggests bringing a jumper.",
+    "topics": ["movement", "mobility", "networking", "cold plunge", "wellbeing"]
   },
   {
     "id": "fri-registration",
@@ -19,7 +23,9 @@
     "type": "Event",
     "venue": "Freo.Social",
     "people": "",
-    "priority": false
+    "priority": false,
+    "description": "Friday conference registration at Freo.Social.",
+    "practical": "The timetable shows registration from 9:00am before the 9:45am welcome."
   },
   {
     "id": "fri-welcome",
@@ -29,8 +35,9 @@
     "title": "Welcome to Country + Welcome Address",
     "type": "Welcome",
     "venue": "Freo.Social",
-    "people": "WAM CEO + Hon. Simone McGurk MLA",
-    "priority": true
+    "people": "WAM CEO; Hon. Simone McGurk MLA, Minister for Creative Industries",
+    "priority": true,
+    "description": "Welcome to Country followed by the WAM welcome address and remarks from the Minister for Creative Industries."
   },
   {
     "id": "fri-future",
@@ -40,8 +47,11 @@
     "title": "Who Owns the Future",
     "type": "Keynote",
     "venue": "Freo.Social",
-    "people": "Annabelle Herd (ARIA & PPCA)",
-    "priority": true
+    "people": "Annabelle Herd — CEO, ARIA & PPCA",
+    "priority": true,
+    "roleLine": "Keynote by Annabelle Herd (ARIA & PPCA)",
+    "description": "Annabelle Herd examines current pressure on Australian copyright settings from technology companies, what is at stake for artists, and why the music industry is contesting proposed changes. She also covers ARIA and PPCA priorities, including ARIA Innovator, the Hall of Fame event, National Cultural Policy submissions, and the challenge of music discovery through short clips and algorithmic feeds.",
+    "topics": ["copyright", "AI and technology", "music policy", "artist rights", "ARIA", "PPCA", "music discovery"]
   },
   {
     "id": "fri-meet-team",
@@ -51,8 +61,10 @@
     "title": "Meet the Team",
     "type": "Panel",
     "venue": "Old Courthouse",
-    "people": "Anika Luna; Darcie Haven; Daisy Siddall; Edvard Hakanssen; Liam Saunders",
-    "priority": false
+    "people": "Moderator: Anika Luna (triple j); Darcie Haven; Daisy Siddall (Cohort); Edvard Hakanssen (Cohort); Liam Saunders (Pillar)",
+    "priority": false,
+    "description": "A practical look at how an artist team is built and sustained. Darcie Haven joins her agent, manager and label manager to explain their roles, how they collaborate, and how trust, communication, shared vision and decision-making work day to day.",
+    "topics": ["artist management", "agents", "labels", "team design", "collaboration", "decision-making"]
   },
   {
     "id": "fri-storytelling",
@@ -63,7 +75,11 @@
     "type": "Masterclass",
     "venue": "Freo.Social",
     "people": "Luanne Shneier (LUUP Music)",
-    "priority": true
+    "priority": true,
+    "roleLine": "Presented by Luanne Shneier (LUUP Music)",
+    "description": "A content and audience-building masterclass focused on community rather than raw follower counts. It covers storytelling, visual identity and world-building; how to create a consistent visual ecosystem from social channels to the stage; and how to support releases and deepen fan connection without burning out.",
+    "practical": "Uses practical frameworks, strategies and case studies.",
+    "topics": ["storytelling", "superfans", "visual identity", "content strategy", "audience growth", "release campaigns"]
   },
   {
     "id": "fri-brunch",
@@ -74,7 +90,10 @@
     "type": "Networking",
     "venue": "Old Courthouse Bar",
     "people": "One of One",
-    "priority": false
+    "priority": false,
+    "description": "A relaxed brunch for women, gender-diverse people and allies to meet others across the music industry, share stories and build community in a supportive environment.",
+    "practical": "Suitable whether attending alone or with friends; food and informal conversation are central to the format.",
+    "topics": ["community", "women in music", "gender diversity", "networking"]
   },
   {
     "id": "fri-jenny",
@@ -84,8 +103,11 @@
     "title": "Industry Address from Jenny Morris",
     "type": "Industry Address",
     "venue": "Old Courthouse",
-    "people": "Jenny Morris OAM MNZM (Chair, APRA)",
-    "priority": true
+    "people": "Jenny Morris MNZM OAM — Chair, APRA",
+    "priority": true,
+    "description": "Jenny Morris delivers an industry address on the future of Australian music and artists. The program frames it as an update to the vision she set out in her 2020 National Press Club address, asking how years of advocacy can translate into a settled and sustainable future for the sector.",
+    "practical": "The detailed program prints the start as 12:30AM, but the timetable and event context place this address at 12:30PM.",
+    "topics": ["industry advocacy", "Australian music", "APRA", "music policy", "sustainability"]
   },
   {
     "id": "fri-speed",
@@ -95,8 +117,11 @@
     "title": "Speed Dating 1:1 Meetings",
     "type": "Networking",
     "venue": "Freo.Social Restaurant",
-    "people": "Pre-booked industry professionals",
-    "priority": true
+    "people": "Selected conference speakers and industry professionals",
+    "priority": true,
+    "description": "One-to-one networking sessions for delegates seeking career advice, project feedback or new industry connections.",
+    "practical": "Meetings are 15 minutes and must be pre-booked through the WAMCon portal.",
+    "topics": ["1:1 networking", "career advice", "project feedback", "industry connections"]
   },
   {
     "id": "fri-touring",
@@ -106,8 +131,10 @@
     "title": "Touring Australia: Festivals, Cities & Regional Stages",
     "type": "Panel",
     "venue": "Freo.Social",
-    "people": "Ant McKenna; Sullivan Patten; Hayley Percy; Rebecca Young; Jayden Roy",
-    "priority": false
+    "people": "Moderator: Ant McKenna (ALMBC); Sullivan Patten (St Kilda Festival); Hayley Percy (Rising Festival); Rebecca Young (Collective Artists); Jayden Roy (Destroy All Lines)",
+    "priority": false,
+    "description": "Festival bookers, booking agents and artist managers unpack touring in Australia in 2026. The discussion covers smarter routing, using festivals as career milestones, sustainable touring, audience development, financial returns and how live performance can support long-term growth.",
+    "topics": ["touring", "festivals", "routing", "regional touring", "audience development", "tour economics"]
   },
   {
     "id": "fri-studio-screen",
@@ -117,8 +144,10 @@
     "title": "From Studio to Screen",
     "type": "Panel",
     "venue": "Old Courthouse",
-    "people": "Simon Miraudo; Jen Taunton; Julian McGruther; Tahlia Beeson; Justin Pounssett",
-    "priority": false
+    "people": "Moderator: Simon Miraudo (RTRFM); Jen Taunten (Midnight Choir); Julian McGruther (Sony Music Publishing); Tahlia Beeson (Brett Oaten Solicitors); Justin Pounssett",
+    "priority": false,
+    "description": "A panel on making music suitable for synchronisation and turning sync ambitions into placements. It examines what music supervisors, agencies and brands look for; how artists can judge fit; rights and pitching; building a sync-friendly catalogue; networking; and when to work independently versus with publishers or sync agents.",
+    "topics": ["sync licensing", "publishing", "music supervisors", "rights", "film and TV", "advertising"]
   },
   {
     "id": "fri-mpeg",
@@ -128,8 +157,10 @@
     "title": "MPEG x WOMP Meet-up",
     "type": "Networking",
     "venue": "Kokomo's Livid Skate Cafe",
-    "people": "MPEG + Women of Music Production",
-    "priority": false
+    "people": "Music Producers and Engineers Guild (MPEG); Women of Music Production (WOMP)",
+    "priority": false,
+    "description": "A casual meet-up for producers, engineers, songwriters, creators and other music professionals. MPEG's focus includes advocacy, education and professional development for the production community, while WOMP supports and connects women and gender-diverse people working in production and audio.",
+    "topics": ["music production", "audio engineering", "songwriting", "professional community", "gender diversity"]
   },
   {
     "id": "fri-open-door",
@@ -139,8 +170,11 @@
     "title": "The Open Door: Industry Round Tables",
     "type": "Networking",
     "venue": "Freo.Social",
-    "people": "MC Siobhan Cotchin; agents, managers, promoters, lawyers, accountants, engineers and artists",
-    "priority": true
+    "people": "MC: Siobhan Cotchin; roundtables with agents, managers, promoters, lawyers, accountants, engineers, working artists and others",
+    "priority": true,
+    "description": "A drop-in networking format designed to reduce barriers between delegates and different parts of the music business. Attendees can move between hosted roundtables, ask questions, seek practical advice and build a clearer picture of how the broader music ecosystem operates.",
+    "practical": "No fixed agenda; participants move freely between roundtables.",
+    "topics": ["roundtables", "industry networking", "music business", "professional advice"]
   },
   {
     "id": "fri-funding",
@@ -150,8 +184,10 @@
     "title": "Funding Futures",
     "type": "Masterclass",
     "venue": "Old Courthouse",
-    "people": "Patrick McLaughlin (CITS) + Sally Piper (Music Australia)",
-    "priority": false
+    "people": "Patrick McLaughlin (Department of Creative Industries, Tourism and Sport); Sally Piper (Music Australia)",
+    "priority": false,
+    "description": "An in-depth guide to funding available to Western Australian music professionals and businesses. It covers current grant programs, eligibility, application processes and ways to strengthen a submission, with advice from people involved in assessing and administering funding.",
+    "topics": ["grants", "funding", "applications", "eligibility", "Music Australia", "CITS"]
   },
   {
     "id": "fri-super",
@@ -162,7 +198,10 @@
     "type": "Drop-in",
     "venue": "Old Courthouse Bar",
     "people": "Sorrento Strategic",
-    "priority": false
+    "priority": false,
+    "description": "A practical question-and-answer session on changes to Australian superannuation arrangements. It addresses what Payday Super means, when super must be paid, implementation, payment systems and the impact on music businesses.",
+    "practical": "Bring questions, concerns and real-life scenarios for tailored guidance.",
+    "topics": ["Payday Super", "superannuation", "business operations", "payments", "compliance"]
   },
   {
     "id": "fri-trade",
@@ -173,7 +212,10 @@
     "type": "Drop-in",
     "venue": "Freo.Social Restaurant",
     "people": "APRA AMCOS; PPCA; WAM; ECU",
-    "priority": false
+    "priority": false,
+    "description": "A relaxed drop-in opportunity to speak directly with APRA AMCOS, PPCA, WAM and ECU about their services, career support, professional development and other opportunities.",
+    "practical": "Drop in at any point during the listed window to ask questions and make connections.",
+    "topics": ["industry services", "career support", "professional development", "APRA AMCOS", "PPCA", "WAM", "ECU"]
   },
   {
     "id": "sat-breakfast",
@@ -183,8 +225,11 @@
     "title": "APRA AMCOS Breakfast + Performance",
     "type": "Networking",
     "venue": "Clancy's Fremantle",
-    "people": "Delegate pass holders and speakers",
-    "priority": true
+    "people": "APRA AMCOS; delegate pass holders and speakers",
+    "priority": true,
+    "description": "Breakfast and a performance, together with an update on APRA AMCOS priorities for the next 12 months and how the organisation is supporting Australian songwriters.",
+    "practical": "The program states this is for delegate pass holders and speakers only.",
+    "topics": ["APRA AMCOS", "songwriters", "industry priorities", "networking", "performance"]
   },
   {
     "id": "sat-registration",
@@ -195,7 +240,8 @@
     "type": "Event",
     "venue": "Freo.Social",
     "people": "",
-    "priority": false
+    "priority": false,
+    "description": "Saturday conference registration at Freo.Social."
   },
   {
     "id": "sat-drew",
@@ -205,8 +251,11 @@
     "title": "The Art of Not Giving Up",
     "type": "Keynote",
     "venue": "Freo.Social",
-    "people": "Drew Goddard",
-    "priority": true
+    "people": "Drew Goddard — Karnivool guitarist, songwriter and co-producer",
+    "priority": true,
+    "roleLine": "Keynote by Drew Goddard",
+    "description": "Drew Goddard reflects on more than two decades in music through Karnivool and his work in advocacy, industry development and community building. The keynote traces the band's development and international success, and explores authenticity, purpose, unconventional thinking, opportunities beyond traditional pathways and creating impact through community leadership.",
+    "topics": ["career longevity", "Karnivool", "authenticity", "advocacy", "community", "artist development"]
   },
   {
     "id": "sat-media",
@@ -216,8 +265,10 @@
     "title": "Media, Marketing and Momentum",
     "type": "Panel",
     "venue": "Old Courthouse",
-    "people": "Pamela Boland; Veronica Zurzolo; Jimmy Moretta; Marietta Chernov; Sarah Hamilton",
-    "priority": true
+    "people": "Moderator: Pamela Boland (RTRFM); Veronica Zurzolo (Auxiliary Records); Jimmy Moretta (Affix); Marietta Chernov (All Heart Music); Sarah Hamilton (Golden Hour, One of One)",
+    "priority": true,
+    "description": "A practical panel on building impact around a release without relying on a large budget or team. It covers artist storytelling, social media, media outreach, radio, playlist curators, audience growth and how to sustain visibility beyond a single release moment.",
+    "topics": ["music marketing", "media", "radio", "playlists", "social media", "release strategy"]
   },
   {
     "id": "sat-speed",
@@ -227,8 +278,11 @@
     "title": "Speed Dating 1:1 Meetings",
     "type": "Networking",
     "venue": "Freo.Social Restaurant",
-    "people": "Pre-booked industry professionals",
-    "priority": true
+    "people": "Selected conference speakers and industry professionals",
+    "priority": true,
+    "description": "One-to-one networking sessions for delegates seeking career advice, project feedback or new industry connections.",
+    "practical": "Meetings are 15 minutes and must be pre-booked through the WAMCon portal.",
+    "topics": ["1:1 networking", "career advice", "project feedback", "industry connections"]
   },
   {
     "id": "sat-great-gig",
@@ -238,8 +292,10 @@
     "title": "The Anatomy of a Great Gig",
     "type": "Panel",
     "venue": "Freo.Social",
-    "people": "Sinead O'Hara; Skinny O'Leary; Sam Blitvich; Ali Craze; Jack Meakins",
-    "priority": true
+    "people": "Moderator: Sinead O'Hara (BaseMgmt, The Rosemount); Skinny O'Leary (Sidequest, Hyper); Sam Blitvich (Sly Withers, Hyper); Ali Craze (Festival HQ); Jack Meakins",
+    "priority": true,
+    "description": "A discussion of what turns a good live event into a great one, spanning artist curation, event marketing, accessibility, sustainability, audience engagement, social impact, community value and the long-term brand identity of an event.",
+    "topics": ["live events", "event design", "accessibility", "sustainability", "audience engagement", "branding"]
   },
   {
     "id": "sat-burgers",
@@ -249,8 +305,10 @@
     "title": "ALMBC Presents Bookers & Burgers",
     "type": "Networking",
     "venue": "Freo.Social Courtyard",
-    "people": "Artists, managers, promoters, agents and festival bookers",
-    "priority": true
+    "people": "Artists; managers; promoters; agents; festival bookers; industry professionals",
+    "priority": true,
+    "description": "WAMCon's informal networking lunch brings together artists and a broad range of industry people over burgers, with the aim of reconnecting existing contacts, making new ones and creating opportunities.",
+    "topics": ["networking", "festival bookers", "agents", "promoters", "artist managers"]
   },
   {
     "id": "sat-release",
@@ -260,8 +318,10 @@
     "title": "Release Ready",
     "type": "Presentation",
     "venue": "Old Courthouse",
-    "people": "Jordan Acker + Alison Bremner (G.Y.R.O.)",
-    "priority": true
+    "people": "Jordan Acker (G.Y.R.O.); Alison Bremner (G.Y.R.O.)",
+    "priority": true,
+    "description": "A practical release-planning framework for independent artists, covering distribution, asset preparation, playlist pitching and social content so a release can be rolled out deliberately rather than reactively.",
+    "topics": ["music releases", "distribution", "asset preparation", "playlist pitching", "social content"]
   },
   {
     "id": "sat-assessment",
@@ -271,8 +331,11 @@
     "title": "Inside the Assessment Panel",
     "type": "Panel",
     "venue": "Freo.Social",
-    "people": "Maisie Glen; Chris Wheeldon; Luke Rinaldi; Kelsie Miller; Carla Steele",
-    "priority": false
+    "people": "Moderator: Maisie Glen (WAM); Chris Wheeldon (RTRFM); Luke Rinaldi (Sweetmate); Kelsie Miller (Across The Road Music); Carla Steele (Regional Arts WA)",
+    "priority": false,
+    "description": "A look inside peer assessment for grants. Experienced assessors review five example applications and discuss strengths, weaknesses and competitiveness, giving attendees insight into evaluation criteria and common problems that can affect funding outcomes.",
+    "practical": "The session uses five real-world example applications as the basis for the discussion.",
+    "topics": ["grant assessment", "funding applications", "peer review", "evaluation criteria"]
   },
   {
     "id": "sat-export",
@@ -282,8 +345,11 @@
     "title": "Export Readiness: Mastering Your International Planning",
     "type": "Workshop",
     "venue": "Old Courthouse",
-    "people": "Dom Alessio + Glenn Dickie (Sounds Australia)",
-    "priority": false
+    "people": "Dom Alessio (Sounds Australia); Glenn Dickie (Sounds Australia); local industry experts and practitioners",
+    "priority": false,
+    "description": "A collaborative workshop on preparing Western Australian artists and teams for international careers. It covers the strategic and operational foundations of export, including data, showcase preparation, budgets, contracts, tax and visas, with contributions from Sounds Australia and local practitioners.",
+    "practical": "Interactive format with opportunities for participants to ask questions and contribute their own experience.",
+    "topics": ["music export", "international touring", "data", "showcases", "budgets", "contracts", "tax", "visas"]
   },
   {
     "id": "sat-hosts",
@@ -293,8 +359,10 @@
     "title": "Hangs with Hosts",
     "type": "Networking",
     "venue": "Freo.Social Courtyard",
-    "people": "WA community radio presenters",
-    "priority": false
+    "people": "Community radio presenters from across Western Australia",
+    "priority": false,
+    "description": "A networking session with WA radio presenters. Attendees can meet the people behind the microphones, discuss how best to submit music for airplay, reconnect with presenters who have supported their work and build relationships with community broadcasters championing local music.",
+    "topics": ["community radio", "airplay", "music submissions", "radio presenters", "networking"]
   },
   {
     "id": "sat-regional",
@@ -305,7 +373,10 @@
     "type": "Drop-in",
     "venue": "Old Courthouse Bar",
     "people": "Regional Arts WA",
-    "priority": false
+    "priority": false,
+    "description": "An opportunity to speak with Regional Arts WA about funding, advocacy, professional development and sector support for regional artists, organisations and creative projects. The team can help with new ideas, grant preparation and identifying relevant funding opportunities.",
+    "practical": "Drop in for questions and tailored guidance; particularly relevant to regionally based artists, organisations and projects.",
+    "topics": ["regional arts", "funding", "grants", "professional development", "advocacy"]
   },
   {
     "id": "sat-scratch",
@@ -315,7 +386,23 @@
     "title": "From Scratch",
     "type": "Panel",
     "venue": "Freo.Social",
-    "people": "Mark Neal; Kelsie Miller; Magpie Johnson; Heath Bradby; Anna Laverty; Tani Webb",
-    "priority": true
+    "people": "Moderator: Mark Neal (The Bird); Kelsie Miller (Across The Road Music); Magpie Johnson (Dashville/Gumball); Heath Bradby (Fidelity Corp); Anna Laverty (MPEG); Tani Webb (FN Focus)",
+    "priority": true,
+    "description": "A panel about building careers and music businesses without starting with major connections or large budgets. Speakers discuss identifying gaps, creating their own platforms, backing themselves, turning ideas into sustainable brands and careers, and lessons learned through the difficult early stages.",
+    "topics": ["entrepreneurship", "career building", "independent music", "promoters", "management", "self-starting"]
+  },
+  {
+    "id": "sat-showcase",
+    "date": "2026-08-15",
+    "start": null,
+    "end": null,
+    "title": "WAM Showcase — WA Music Across Fremantle",
+    "type": "Showcase",
+    "venue": "Buffalo Club; Clancy's Fremantle; Honky Tonk Blues; Wyola Bar",
+    "people": "BIRDLAND; BLUSH; BOOX KID; CLARE PERROTT; CLAUDIA TRIPP; FIGUREHEAD; GEORGA RAATH; HEAVEN//ALONE; IVORY DUSK; JACK HAMILTON; JJ VACANT; LIGHTNIN JACK; LITTLE GUILT; MAATAKITJ; OAKABELLA MAE; ODLAW; RATSALAD.; ROSALIE CHILVERS; SOUL INSYNC; STOW; TAIJA; TANYA RANSOM; TCHÉGA; THE FOREVER PARTY; THE GRAY BROTHERS",
+    "priority": true,
+    "description": "The program includes a showcase of Western Australian music across four Fremantle venues, featuring the full artist list shown here.",
+    "practical": "The conference program export lists the artists and venues but does not provide individual showcase set times on this page.",
+    "topics": ["WA music", "showcase", "live music"]
   }
 ]
