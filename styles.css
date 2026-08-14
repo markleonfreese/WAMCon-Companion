@@ -28,6 +28,17 @@ main{max-width:760px;margin:auto;padding:16px 16px 60px}
 .note-wrap{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.note-wrap label{font-size:.78rem;font-weight:800}.notes{width:100%;margin-top:6px;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff;resize:vertical;min-height:110px}.save-state{font-size:.68rem;color:var(--muted);text-align:right;margin-top:4px}
 .tools-card{margin-top:18px}.tool-buttons{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.source-note{font-size:.72rem;color:var(--muted);line-height:1.5;margin:18px 4px}.source-note a{color:inherit}
 .empty{background:var(--panel);border:1px dashed var(--line);border-radius:16px;padding:25px;text-align:center;color:var(--muted)}
+.program-details{margin-top:10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px 0}
+.program-details summary{cursor:pointer;font-size:.78rem;font-weight:900;color:var(--ink);list-style:none;display:flex;align-items:center;justify-content:space-between}
+.program-details summary::-webkit-details-marker{display:none}
+.program-details summary::after{content:"+";font-size:1.1rem;color:var(--muted)}
+.program-details[open] summary::after{content:"–"}
+.program-body{padding:9px 0 3px;font-size:.8rem;line-height:1.48;color:#48463f}
+.program-body p{margin:6px 0 8px}
+.role-line{font-weight:850;color:var(--ink);margin-bottom:6px}
+.practical{background:#f1eddf;border-radius:10px;padding:9px 10px;margin:8px 0}
+.topics{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.topic{font-size:.66rem;font-weight:800;padding:4px 7px;border-radius:999px;background:#ece6d8;color:#555149}
 @media(max-width:540px){
   .now-card,.tools-card{align-items:flex-start;flex-direction:column}
   .session-card{grid-template-columns:56px 1fr;padding:12px}
