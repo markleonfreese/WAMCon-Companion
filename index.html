@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#242424">
+  <meta name="description" content="Unofficial personal WAMCon 2026 schedule, check-in and notes companion.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>WAMCon Companion</title>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">WAMCON 2026 · PERSONAL COMPANION</div>
+      <h1>What’s on now?</h1>
+    </div>
+    <div class="clock-wrap" aria-live="polite">
+      <div id="clock">--:--</div>
+      <div id="dayLabel">AWST</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="now-card" id="nowCard">
+      <div>
+        <div class="eyebrow">LIVE STATUS</div>
+        <h2 id="nowHeadline">Loading schedule…</h2>
+        <p id="nowSub"></p>
+      </div>
+      <button id="jumpNow" class="secondary">Jump to now</button>
+    </section>
+
+    <section class="controls">
+      <div class="day-tabs" role="tablist">
+        <button class="day-tab active" data-day="today">Today</button>
+        <button class="day-tab" data-day="2026-08-14">Fri 14</button>
+        <button class="day-tab" data-day="2026-08-15">Sat 15</button>
+      </div>
+      <div class="filter-row">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="upcoming">Now + next</button>
+        <button class="chip" data-filter="priority">Recommended</button>
+        <button class="chip" data-filter="checked">Checked in</button>
+        <button class="chip" data-filter="planned">My plan</button>
+      </div>
+    </section>
+
+    <section id="schedule" class="schedule"></section>
+
+    <section class="tools-card">
+      <div>
+        <h2>Your notes stay on this device</h2>
+        <p>Check-ins, favourites and notes are stored locally. Export a backup whenever you want.</p>
+      </div>
+      <div class="tool-buttons">
+        <button id="exportBtn" class="secondary">Export notes</button>
+        <button id="installBtn" class="secondary" hidden>Install app</button>
+      </div>
+    </section>
+
+    <p class="source-note">
+      Unofficial personal companion. Schedule sourced from the official WAMCon 2026 program.
+      <a href="https://wamusicweek.com.au/wamcon/" target="_blank" rel="noopener">Official event site</a> ·
+      <a href="https://wam.org.au/wp-content/uploads/2026/07/WAMCon-2026-Program-1.pdf" target="_blank" rel="noopener">Official program PDF</a>
+    </p>
+  </main>
+
+  <template id="sessionTemplate">
+    <article class="session-card">
+      <div class="time-rail">
+        <div class="start"></div>
+        <div class="end"></div>
+      </div>
+      <div class="session-main">
+        <div class="badges"></div>
+        <h3 class="title"></h3>
+        <div class="meta"></div>
+        <div class="people"></div>
+        <div class="actions">
+          <button class="plan-btn secondary">Add to plan</button>
+          <button class="check-btn primary">Check in</button>
+        </div>
+        <div class="note-wrap" hidden>
+          <label>Session notes
+            <textarea class="notes" rows="5" placeholder="Key ideas, people to follow up with, BA Connect observations, actions…"></textarea>
+          </label>
+          <div class="save-state">Saved locally</div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>
