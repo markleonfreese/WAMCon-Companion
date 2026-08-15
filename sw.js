@@ -1,5 +1,5 @@
-const CACHE="wamcon-companion-v5";
-const ASSETS=["./","./index.html","./styles.css","./app.js","./import.js","./schedule.json","./manifest.json","./icon-192.png","./icon-512.png"];
+const CACHE="wamcon-companion-v6";
+const ASSETS=["./","./index.html","./styles.css","./app.js","./import.js","./schedule.json","./showcase.json","./manifest.json","./icon-192.png","./icon-512.png"];
 self.addEventListener("install",e=>{
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));
