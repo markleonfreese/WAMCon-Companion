@@ -58,8 +58,9 @@ function updateNowCard(){
   const next=today.filter(s=>relation(s,now)==="future").sort((a,b)=>mins(a.start)-mins(b.start))[0];
 
   if(live.length){
-    $("#nowHeadline").textContent = live.length===1 ? live[0].title : `${live.length} sessions running now`;
-    $("#nowSub").textContent = live.length===1 ? `${live[0].venue} · until ${fmt(live[0].end)}` : live.map(s=>`${s.title} · ${s.venue}`).join(" | ");
+    const allShowcase=live.every(s=>s.eventGroup==="showcase");
+    $("#nowHeadline").textContent = live.length===1 ? live[0].title : allShowcase ? `${live.length} showcase acts playing now` : `${live.length} sessions running now`;
+    $("#nowSub").textContent = live.length===1 ? `${live[0].venue} · until ${fmt(live[0].end)}` : live.map(s=>`${s.title} · ${s.venue} · to ${fmt(s.end)}`).join(" | ");
   } else if(next){
     const diff=mins(next.start)-now.minutes;
     $("#nowHeadline").textContent = `Next: ${next.title}`;
@@ -68,8 +69,8 @@ function updateNowCard(){
     $("#nowHeadline").textContent="Conference sessions finished for Friday";
     $("#nowSub").textContent="Switch to Saturday to plan tomorrow.";
   } else if(now.date==="2026-08-15"){
-    $("#nowHeadline").textContent="WAMCon daytime sessions are finished";
-    $("#nowSub").textContent="The Saturday showcase and your saved notes remain available below.";
+    $("#nowHeadline").textContent="WAM Music Week events have finished for today";
+    $("#nowSub").textContent="Your check-ins, plan and notes remain available below.";
   } else {
     $("#nowHeadline").textContent="WAMCon 2026 companion";
     $("#nowSub").textContent="Friday 14 + Saturday 15 August · Walyalup/Fremantle.";
@@ -80,6 +81,7 @@ function shouldShow(s){
   const d=effectiveDay();
   if(s.date!==d) return false;
   const r=relation(s);
+  if(filter==="showcase") return s.eventGroup==="showcase";
   if(filter==="upcoming") return r==="live" || r==="future" || r==="untimed";
   if(filter==="priority") return s.priority;
   if(filter==="checked") return !!state.checkins[s.id];
@@ -187,11 +189,28 @@ function refreshCardStatuses(){
   });
 }
 
-function jumpToNow(){
-  selectedDay="today"; filter="all";
-  $$(".day-tab").forEach(b=>b.classList.toggle("active",b.dataset.day==="today"));
-  $$(".chip").forEach(b=>b.classList.toggle("active",b.dataset.filter==="all"));
+function setView(day,newFilter){
+  selectedDay=day;
+  filter=newFilter;
+  $$(".day-tab").forEach(b=>b.classList.toggle("active",b.dataset.day===day));
+  $$(".chip").forEach(b=>b.classList.toggle("active",b.dataset.filter===newFilter));
   render();
+}
+
+function jumpToNow(){
+  setView("today","all");
+  setTimeout(()=>{
+    const live=$(".session-card.live");
+    const firstFuture=[...$$(".session-card")].find(c=>{
+      const s=sessions.find(x=>x.id===c.dataset.id);
+      return s && relation(s)==="future";
+    });
+    (live||firstFuture||$("#schedule")).scrollIntoView({behavior:"smooth",block:"start"});
+  },60);
+}
+
+function showShowcase(){
+  setView("2026-08-15","showcase");
   setTimeout(()=>{
     const live=$(".session-card.live");
     const firstFuture=[...$$(".session-card")].find(c=>{
@@ -226,14 +245,21 @@ $$(".day-tab").forEach(b=>b.addEventListener("click",()=>{selectedDay=b.dataset.
 $$(".chip").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filter; $$(".chip").forEach(x=>x.classList.toggle("active",x===b)); render();}));
 $("#jumpNow").addEventListener("click",jumpToNow);
 $("#exportBtn").addEventListener("click",exportNotes);
+$("#showShowcaseBtn")?.addEventListener("click",showShowcase);
 
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;$("#installBtn").hidden=false;});
 $("#installBtn").addEventListener("click",async()=>{if(!deferredPrompt)return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; $("#installBtn").hidden=true;});
 
-fetch("./schedule.json",{cache:"no-store"}).then(r=>r.json()).then(data=>{
-  sessions=data; render(); updateClock(); setInterval(updateClock,1000);
+Promise.all([
+  fetch("./schedule.json",{cache:"no-store"}).then(r=>r.json()),
+  fetch("./showcase.json",{cache:"no-store"}).then(r=>r.json())
+]).then(([conference,showcase])=>{
+  sessions=[...conference,...showcase];
+  render();
+  updateClock();
+  setInterval(updateClock,1000);
 }).catch(()=>{
-  $("#schedule").innerHTML='<div class="empty">Could not load the local schedule file.</div>';
+  $("#schedule").innerHTML='<div class="empty">Could not load the local schedule files.</div>';
 });
 
 if("serviceWorker" in navigator){ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js")); }
