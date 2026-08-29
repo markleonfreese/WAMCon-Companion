@@ -83,7 +83,6 @@ function shouldShow(s){
   const r=relation(s);
   if(filter==="showcase") return s.eventGroup==="showcase";
   if(filter==="upcoming") return r==="live" || r==="future" || r==="untimed";
-  if(filter==="priority") return s.priority;
   if(filter==="checked") return !!state.checkins[s.id];
   if(filter==="planned") return !!state.planned[s.id];
   return true;
@@ -127,7 +126,7 @@ function render(){
     node.querySelector(".meta").textContent=`${s.type} · ${s.venue}`;
     node.querySelector(".people").textContent=s.people || "";
     const badges=node.querySelector(".badges");
-    badges.innerHTML=`<span class="badge">${escapeHtml(s.type)}</span>${s.priority?'<span class="badge rec">Recommended</span>':""}${!s.start?'<span class="badge">Untimed</span>':""}`;
+    badges.innerHTML=`<span class="badge">${escapeHtml(s.type)}</span>${!s.start?'<span class="badge">Untimed</span>':""}`;
 
     const actions=node.querySelector(".actions");
     actions.insertAdjacentHTML("beforebegin",buildProgramDetails(s));
