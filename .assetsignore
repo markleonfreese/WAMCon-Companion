@@ -2,6 +2,9 @@
 .github
 node_modules
 README.md
+REUSE-AND-DEPLOYMENT.md
+THIRD-PARTY-NOTICE.md
+LICENSE
 wrangler.jsonc
 .assetsignore
 *.zip

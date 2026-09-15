@@ -1,5 +1,7 @@
 const TZ = "Australia/Perth";
 const STORE_KEY = "wamcon-companion-v1";
+const EVENT_START = "2026-08-14";
+const EVENT_END = "2026-08-15";
 let sessions = [];
 let state = JSON.parse(localStorage.getItem(STORE_KEY) || '{"checkins":{},"notes":{},"planned":{}}');
 let selectedDay = "today";
@@ -36,6 +38,36 @@ function relation(s, now=perthParts()){
   return "future";
 }
 
+function eventPhase(date=perthParts().date){
+  if(date < EVENT_START) return "before";
+  if(date > EVENT_END) return "after";
+  return "during";
+}
+
+function actualDay(){
+  const d=perthParts().date;
+  return (d===EVENT_START || d===EVENT_END) ? d : null;
+}
+function effectiveDay(){ return selectedDay==="today" ? (actualDay() || EVENT_START) : selectedDay; }
+
+function syncDateControls(){
+  const phase=eventPhase();
+  const todayTab=$(".day-tab[data-day='today']");
+  const upcomingChip=$(".chip[data-filter='upcoming']");
+  const jump=$("#jumpNow");
+
+  if(todayTab) todayTab.hidden=phase!=="during";
+  if(upcomingChip) upcomingChip.hidden=phase!=="during";
+
+  if(phase!=="during" && selectedDay==="today") selectedDay=EVENT_START;
+  if(phase!=="during" && filter==="upcoming") filter="all";
+
+  if(jump) jump.textContent=phase==="during" ? "Jump to now" : "Browse programme";
+
+  $$(".day-tab").forEach(b=>b.classList.toggle("active",b.dataset.day===selectedDay));
+  $$(".chip").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
+}
+
 function updateClock(){
   const now = new Date();
   $("#clock").textContent = new Intl.DateTimeFormat("en-AU",{timeZone:TZ,hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).format(now);
@@ -44,15 +76,23 @@ function updateClock(){
   refreshCardStatuses();
 }
 
-function actualDay(){
-  const d=perthParts().date;
-  return (d==="2026-08-14"||d==="2026-08-15") ? d : "2026-08-14";
-}
-function effectiveDay(){ return selectedDay==="today" ? actualDay() : selectedDay; }
-
 function updateNowCard(){
   if(!sessions.length) return;
   const now=perthParts();
+  const phase=eventPhase(now.date);
+
+  if(phase==="before"){
+    $("#nowHeadline").textContent="WAMCon 2026 starts Friday 14 August";
+    $("#nowSub").textContent="Browse the Friday and Saturday programme below.";
+    return;
+  }
+
+  if(phase==="after"){
+    $("#nowHeadline").textContent="WAMCon 2026 has finished";
+    $("#nowSub").textContent="The 14–15 August programme remains available below as a personal companion archive.";
+    return;
+  }
+
   const today=sessions.filter(s=>s.date===now.date && s.start && s.end);
   const live=today.filter(s=>relation(s,now)==="live");
   const next=today.filter(s=>relation(s,now)==="future").sort((a,b)=>mins(a.start)-mins(b.start))[0];
@@ -65,15 +105,12 @@ function updateNowCard(){
     const diff=mins(next.start)-now.minutes;
     $("#nowHeadline").textContent = `Next: ${next.title}`;
     $("#nowSub").textContent = `${next.venue} · ${fmt(next.start)} · starts in ${diff} min`;
-  } else if(now.date==="2026-08-14"){
-    $("#nowHeadline").textContent="Conference sessions finished for Friday";
-    $("#nowSub").textContent="Switch to Saturday to plan tomorrow.";
-  } else if(now.date==="2026-08-15"){
-    $("#nowHeadline").textContent="WAM Music Week events have finished for today";
-    $("#nowSub").textContent="Your check-ins, plan and notes remain available below.";
+  } else if(now.date===EVENT_START){
+    $("#nowHeadline").textContent="Friday programme has finished";
+    $("#nowSub").textContent="Switch to Saturday for the next day’s programme.";
   } else {
-    $("#nowHeadline").textContent="WAMCon 2026 companion";
-    $("#nowSub").textContent="Friday 14 + Saturday 15 August · Walyalup/Fremantle.";
+    $("#nowHeadline").textContent="WAMCon 2026 has finished for the day";
+    $("#nowSub").textContent="Your check-ins, plan and notes remain available below.";
   }
 }
 
@@ -198,7 +235,8 @@ function setView(day,newFilter){
 }
 
 function jumpToNow(){
-  setView("today","all");
+  const current=actualDay();
+  setView(current ? "today" : EVENT_START,"all");
   setTimeout(()=>{
     const live=$(".session-card.live");
     const firstFuture=[...$$(".session-card")].find(c=>{
@@ -210,7 +248,7 @@ function jumpToNow(){
 }
 
 function showShowcase(){
-  setView("2026-08-15","showcase");
+  setView(EVENT_END,"showcase");
   setTimeout(()=>{
     const live=$(".session-card.live");
     const firstFuture=[...$$(".session-card")].find(c=>{
@@ -255,6 +293,7 @@ Promise.all([
   fetch("./showcase.json",{cache:"no-store"}).then(r=>r.json())
 ]).then(([conference,showcase])=>{
   sessions=[...conference,...showcase];
+  syncDateControls();
   render();
   updateClock();
   setInterval(updateClock,1000);

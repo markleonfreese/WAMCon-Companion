@@ -1,4 +1,4 @@
-const CACHE="wamcon-companion-v7";
+const CACHE="wamcon-companion-v8";
 const ASSETS=["./","./index.html","./styles.css","./app.js","./profiles.js","./import.js","./artists.json","./schedule.json","./showcase.json","./manifest.json","./icon-192.png","./icon-512.png"];
 self.addEventListener("install",e=>{
   self.skipWaiting();
