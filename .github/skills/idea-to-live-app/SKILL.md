@@ -7,9 +7,9 @@ description: Guide a non-technical business analyst from a real problem to a sma
 
 **Audience:** Business analysts and first-time app builders. **Outcome:** one useful, small web app with a shareable URL and a safe repeatable improvement loop.
 
-This is a **guided conversation**, not an instruction to build everything immediately. You can paste this file's URL into a coding assistant, provide its contents, or install it in a skill-capable environment. A Markdown file alone does not give an assistant GitHub or Cloudflare permissions.
+This is a **guided conversation**, not an instruction to build everything immediately. Ordinary ChatGPT with an authorised GitHub MCP/plugin/connector can be sufficient for a small static app: it can create the files, update the repo and propose iterations in chat. Codex, Claude Code or ChatGPT Work are optional for more complex work, not prerequisites. You can paste this file's URL into a capable assistant, provide its contents, or install it in a skill-capable environment. A Markdown file alone does not grant GitHub or Cloudflare permissions; access and usage limits vary.
 
-**Example:** [WAMCon Companion](https://wamcon-companion.markleonfreese.workers.dev/) is an *unofficial personal attendee experiment*, not an official WAM product. It assembled public conference programme information into a mobile view with Now/Next, filters, favourites and local notes. [Public example repository](https://github.com/markleonfreese/WAMCon-Companion). WAMCon was deployed using **Cloudflare Workers Static Assets**. For new BA-led prototypes, this guide defaults to **Cloudflare Pages with GitHub integration**, which is often simpler and offers automatic preview builds.
+**Example:** [WAMCon Companion](https://wamcon-companion.markleonfreese.workers.dev/) is an *unofficial personal attendee experiment*, not an official WAM product. It assembled public conference programme information into a mobile view with Now/Next, filters, favourites and local notes. [Public example repository](https://github.com/markleonfreese/WAMCon-Companion). WAMCon was deployed using **Cloudflare Workers Static Assets**. For new BA-led prototypes, this guide defaults to **Cloudflare Workers Static Assets connected to GitHub via Workers Builds**. Cloudflare recommends Workers for new projects, and a Git-connected Worker can deploy automatically without a local terminal. Pages remains supported.
 
 ## Assistant operating rules
 
@@ -73,42 +73,57 @@ Ask: **"Do you already have a GitHub account and a repository for this idea?"**
 - **No account:** Explain how to create one at [github.com](https://github.com/) using its free account option; do not ask for their password or verification code.
 - **No repository:** Guide them to **New repository** → descriptive name → **Public** only if the content is safe to publish (otherwise private, then verify hosting access) → Create repository. If local files already contain a README, avoid GitHub's initial README to prevent an unnecessary conflict.
 - **Existing repository:** Ask for the URL and check whether it already contains a site and whether anyone relies on its `main` branch. Avoid overwriting unrelated work.
+- **Recommended low-friction route:** Connect GitHub to ChatGPT or another chosen assistant via an authorised MCP/plugin/connector, if the user's account supports it. Verify which repo it can access and obtain permission for file creation or updates. In chat, ask the assistant to create the starter files and commit them to a new branch. No specialist coding agent or terminal is inherently required.
 - **No Git tools installed:** Show the **Add file → Upload files** route on GitHub for a first draft; later use branches and GitHub's web editor, or an assistant with GitHub connection.
 - **Git available:** Offer the CLI only as an optional advanced route.
 
 Confirm that the repo has a README and no secrets or real personal data. **Do not paste access tokens into chat.**
 
-## Stage 4 — Set up Cloudflare and select an address
+## Stage 4 — Connect GitHub to Cloudflare Workers
 
 Ask: **"Do you have a Cloudflare account?"**
 - If not, direct them to [dash.cloudflare.com](https://dash.cloudflare.com/) to create a free account.
-- Ask: **"Do you want a free public URL now, or do you already own a custom domain?"**
-  - **Free URL:** Recommend `<project>.pages.dev` for this workflow. No domain purchase required.
-  - **Custom URL:** Optional. Explain that domain registration/renewal may cost money; only connect a domain they own or are authorised to control. **Do not modify DNS without permission.**
-- Ask: **"Is there already a Pages project connected to this GitHub repository?"** Reuse it when practical.
+- Ask: **"Would you like a free public URL for the prototype, or do you already own a custom domain?"**
+  - **Free URL:** Recommend the assigned `workers.dev` HTTPS address. No domain purchase required.
+  - **Custom URL:** Optional. Domain registration and renewals may cost money. Only change DNS with explicit authorisation.
+- Ask: **"Is the repository already linked to a Worker or a Pages project?"** Inspect or reuse the existing deployment where appropriate; do not create duplicates blindly.
 
-### Cloudflare Pages — browser-based Git integration (default)
+### Cloudflare Workers — Git-connected, browser-led setup (default)
 
-In the Cloudflare dashboard, choose **Workers & Pages → Pages → Connect to Git** (interface labels may change). Authorise the required GitHub repository. Select its production branch (normally `main`). For the recommended `public/` folder of plain static files:
-- **Framework preset:** None
-- **Build command:** Leave empty / none
-- **Build output directory:** `public`
+1. In the Cloudflare dashboard, open **Workers & Pages → Create application**, then choose the GitHub connection (dashboard labels may vary).
+2. Authorise the appropriate GitHub repository and select the repository created in Stage 3.
+3. Ensure the repository has an appropriate `wrangler.jsonc` file, which ChatGPT can add. For the example's `public/` folder, a minimal configuration is:
 
-Check the deployment result and visit the assigned `pages.dev` URL on a phone. Cloudflare Pages can automatically rebuild after pushes to the connected production branch.
+```json
+{
+  "name": "my-first-event-app",
+  "compatibility_date": "2026-10-28",
+  "assets": { "directory": "./public" }
+}
+```
 
-**WAMCon reference only:** Its existing public `workers.dev` site uses a separate Workers Static Assets configuration and `npx wrangler deploy`. Do not tell a new user that Cloudflare Pages and Workers are the same deployment, or that a GitHub push automatically deploys a manually configured Workers project.
+4. Select the production branch (normally `main`). For plain static assets, the build command may be unnecessary; check the actual Workers Builds settings. Workers Builds uses its configured deployment command (normally `npx wrangler deploy`) on Cloudflare's infrastructure.
+5. Save and deploy. Open the real assigned `workers.dev` URL on your phone. Check that the production build succeeded.
+
+**The BA does not need to install or run Wrangler locally for this Git-connected path.** Changes to the configured production branch can trigger an automatic build and deployment. ChatGPT can manage the repo through GitHub permissions, and Cloudflare manages deployment through its separate GitHub connection.
+
+**Why Workers instead of Pages?** Cloudflare recommends Workers Static Assets for new projects, including static sites and PWAs, and concentrates new features there. **Pages is still supported** and remains a usable alternate Git deployment path, with `pages.dev` addresses and previews. The same idea → Git → preview → production → feedback loop applies. Do not claim Pages has already shut down.
+
+### Cloudflare Pages — supported alternative
+
+If an existing Pages project is more suitable, connect it to GitHub, select `main`, use no framework or build command for plain static files, and set the output directory to `public`. Verify the actual production `pages.dev` address and deployment status. Do not assume a Pages project and a Worker are the same service.
 
 ## Stage 5 — Protect the live version using a branch
 
-Ask: **"Is anybody using the current live URL?"**
+Ask: **"Is anybody using the live URL right now?"**
 
-If **yes** (or unknown), use a feature branch, such as `feature/improve-session-search`. In the GitHub web UI, create the branch from `main`; edit/upload changes there. Open a **pull request into `main`**, then review and test before merging.
+If **yes** (or unknown), tell ChatGPT to create a named feature branch, e.g. `feature/improve-session-search`, and modify the authorised repo there. Open a pull request into `main` and inspect the diff before approval.
 
-For a Git-integrated **Cloudflare Pages** project, non-production branches and in-repository pull requests can generate **preview deployments**, subject to branch-control settings. The preview has its own URL and does not overwrite the production `pages.dev` address. Find the actual URL in Cloudflare's deployments or the PR checks; **never guess a URL**. Preview URLs may be public, so they must not contain secrets or private data.
+With **Workers Builds**, non-production branch pushes can create separate Worker preview URLs **when preview builds are enabled and configured**. Check the actual URL in Cloudflare and GitHub's PR/build status; never invent it. The preview should not overwrite the public `workers.dev` production site. Preview URLs may themselves be publicly accessible: use only synthetic or approved public data.
 
-Only after reviewing the preview, acceptance results and changed files, ask the BA to **approve merging**. When approved, merge to `main`; Pages should deploy production automatically if integration and branch settings are enabled. Confirm that the build passed and **test the production URL again**. A successful push is not proof of a successful deployment.
+After the user reviews the preview, tests the original task and accepts the changed behaviour, request explicit approval to merge into `main`. Workers Builds then automatically deploys production **if Git integration, branch settings and the build are working**. Verify success and the live URL: a commit does not guarantee a working site.
 
-If no Git integration or preview deployment is available, explain that limitation and arrange a manual isolated preview; do not claim a branch automatically receives a web URL.
+If the assistant lacks the necessary GitHub connection, explain the manual GitHub web-editor/PR route without pretending to edit or deploy files. If branch previews are not configured, explain the gap and arrange a safe isolated test; do not assume every branch has a URL.
 
 ## Stage 6 — THE REPEAT LOOP (not optional)
 
@@ -149,10 +164,11 @@ Create a two-minute handover with those answers. Do not label a POC production-r
 
 ## Sources and free-tier caveats
 
-- [Cloudflare Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/)
-- [Cloudflare Pages preview deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
-- [Cloudflare Pages free-tier limits](https://developers.cloudflare.com/pages/platform/limits/)
+- [Cloudflare Workers best practices (Workers for new projects)](https://developers.cloudflare.com/workers/best-practices/workers-best-practices/)
+- [Workers Builds: connect GitHub and deploy on push](https://developers.cloudflare.com/workers/ci-cd/builds/)
+- [Workers preview branches](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)
+- [Cloudflare Pages (still available)](https://developers.cloudflare.com/pages/)
 - [GitHub getting started](https://docs.github.com/en/get-started)
 - [WAMCon Companion example source](https://github.com/markleonfreese/WAMCon-Companion)
 
-This is a **working educational guide**, not a guaranteed zero-cost production offer or an IIBA-approved operating procedure. Keep the exercise de-identified, use fictional data and validate any current provider instructions before acting.
+This is a **working educational guide**, not a guaranteed zero-cost production offer or an IIBA-approved operating procedure. Keep the exercise de-identified, use fictional data and validate provider instructions and tool permissions before acting.
