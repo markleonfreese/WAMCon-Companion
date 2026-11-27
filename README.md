@@ -1,8 +1,10 @@
 # WAMCon 2026 Companion PWA
 
-An unofficial personal companion I built for WAMCon / WA Music Week 2026 so the programme was easier to use while moving around the event.
+An unofficial local-first prototype and personal archive I built for WAMCon / WA Music Week 2026 so the programme was easier to use while moving around the event. WAMCon 2026 has finished.
 
 Live demo: https://wamcon-companion.markleonfreese.workers.dev/
+
+Built by [Mark Freese](https://markfreese.com). [Send feedback or report an issue](https://github.com/markleonfreese/WAMCon-Companion/issues).
 
 This was a personal attendee experiment, not an official WAM product and not commissioned by or affiliated with WAM.
 
